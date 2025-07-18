@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play Golf Predictor</title>
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="play.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            image-rendering: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            background-color: rgba(0, 100, 0, 0.6);
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        select, input[type="submit"] {
+            width: 220px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 30px;
+        }
+
+        .result h3 {
+            background-color: rgba(255, 255, 255, 0.85);
+            color: black;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 600px) {
+            select, input[type="submit"] {
+                width: 90%;
+            }
+
+            form {
+                padding: 20px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Should You Play Golf Today?</h2>
+
+        <form method="POST" action="/predict">
+            <select name="outlook" required>
+                <option value="" disabled selected>Select Outlook</option>
+                <option value="Sunny">Sunny</option>
+                <option value="Overcast">Overcast</option>
+                <option value="Rainy">Rainy</option>
+            </select>
+            <br>
+            <select name="temperature" required>
+                <option value="" disabled selected>Select Temperature</option>
+                <option value="Hot">Hot</option>
+                <option value="Mild">Mild</option>
+                <option value="Cool">Cool</option>
+            </select>
+            <br>
+            <select name="humidity" required>
+                <option value="" disabled selected>Select Humidity</option>
+                <option value="High">High</option>
+                <option value="Normal">Normal</option>
+            </select>
+            <br>
+            <select name="windy" required>
+                <option value="" disabled selected>Select Wind</option>
+                <option value="Strong">Strong</option>
+                <option value="Weak">Weak</option>
+            </select>
+            <br>
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            <h3>{{ prediction_text }}</h3>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
